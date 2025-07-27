@@ -14,17 +14,17 @@ services:
       - "9001:9001"   # WebSocket backend
     networks:
       - dokploy-network
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=dokploy-network
+    #labels:
+      #- traefik.enable=true
+      #- traefik.docker.network=dokploy-network
 
       # Router HTTPS → backend 9001 (NO pongas "ws")
-      - traefik.http.routers.mqttws.rule=Host(`mqttws.generativo.cloud`)
-      - traefik.http.routers.mqttws.entrypoints=websecure
-      - traefik.http.routers.mqttws.tls=true
-      - traefik.http.routers.mqttws.tls.certresolver=letsencrypt
+      #- traefik.http.routers.mqttws.rule=Host(`mqttws.generativo.cloud`)
+      #- traefik.http.routers.mqttws.entrypoints=websecure
+      #- traefik.http.routers.mqttws.tls=true
+      #- traefik.http.routers.mqttws.tls.certresolver=letsencrypt
 
-      - traefik.http.services.mqttws.loadbalancer.server.port=9001
+      #- traefik.http.services.mqttws.loadbalancer.server.port=9001
       #   ⬆  nada de ".server.scheme=ws"
 networks:
   dokploy-network:
