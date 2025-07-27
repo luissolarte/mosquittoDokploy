@@ -1,0 +1,1 @@
+Este es un docker compose para desplegar mosquitto en dokploy
