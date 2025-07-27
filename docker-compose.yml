@@ -5,19 +5,28 @@ services:
     image: eclipse-mosquitto
     container_name: mosquitto
     restart: unless-stopped
-
     volumes:
       - ./mosquitto/conf:/mosquitto/config
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
-
     ports:
-      - "1883:1883"
-      - "9001:9001"
-
+      - '1883:1883'      # TCP directo
+      - '9001:9001'      # WebSocket backend
     networks:
       - dokploy-network
 
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+
+      # --- Router HTTPS + WebSocket ---
+      - traefik.http.routers.mqttws.rule=Host(`mqttws.generativo.cloud`)
+      - traefik.http.routers.mqttws.entrypoints=websecure
+      - traefik.http.routers.mqttws.tls.certresolver=letsencrypt
+
+      # Servicio → Mosquitto:9001 usando WebSocket
+      - traefik.http.services.mqttws.loadbalancer.server.port=9001
+      - traefik.http.services.mqttws.loadbalancer.server.scheme=ws
 networks:
   dokploy-network:
     external: true
