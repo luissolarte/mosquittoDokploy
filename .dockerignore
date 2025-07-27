@@ -1,0 +1,14 @@
+# Carpetas de trabajo
+*/data
+*/log
+
+# Archivos temporales
+**/__pycache__/
+*.sw?
+*.tmp
+.DS_Store
+
+# Git y docs locales
+.git
+.gitignore
+README.md
